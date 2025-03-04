@@ -168,7 +168,7 @@ using testLinq.Connection;
 // Console.WriteLine(secondNumberFromList);
 
 Barkovskii2323dLearningDbContext db = new Barkovskii2323dLearningDbContext();
-LogicDb logicDb = new LogicDb(db);
+OneToManyLogicDb oneToManyLogicDb = new OneToManyLogicDb(db);
 
 Console.WriteLine("Привет, тут можно что-то делать с БД");
 
@@ -178,7 +178,8 @@ while (true)
     Console.WriteLine("2. Просмотреть все книги");
     Console.WriteLine("3. Удалить книгу");
     Console.WriteLine("4. Обновить название книги");
-    Console.WriteLine("5. Закрыть приложение");
+    Console.WriteLine("5. Удалить автора");
+    Console.WriteLine("6. Закрыть приложение");
     Console.Write("Выберите действие: ");
     int choice = int.Parse(Console.ReadLine());
     Console.WriteLine();
@@ -187,33 +188,40 @@ while (true)
     {
         case 1:
         {
-            logicDb.AddNewBook();
+            oneToManyLogicDb.AddNewBook();
             
             Console.WriteLine();
         }
             break;
         case 2:
         {
-            logicDb.ViewBooks();
+            oneToManyLogicDb.ViewBooks();
             
             Console.WriteLine();
         }
             break;
         case 3:
         {
-            logicDb.DeleteBook();
+            oneToManyLogicDb.DeleteBook();
             
             Console.WriteLine();
         }
             break;
         case 4:
         {
-            logicDb.UpdateBook();
+            oneToManyLogicDb.UpdateBook();
             
             Console.WriteLine();
         }
             break;
         case 5:
+        {
+            oneToManyLogicDb.DeleteAuthor();
+            
+            Console.WriteLine();
+        }
+            break;
+        case 6:
         {
             return;
         }

@@ -33,3 +33,4 @@ C:\Users\Пользователь\RiderProjects\testLinq\testLinq\bin\Debug\net8
 C:\Users\Пользователь\RiderProjects\testLinq\testLinq\bin\Debug\net8.0\System.CodeDom.dll
 C:\Users\Пользователь\RiderProjects\testLinq\testLinq\obj\Debug\net8.0\testLinq.csproj.AssemblyReference.cache
 C:\Users\Пользователь\RiderProjects\testLinq\testLinq\obj\Debug\net8.0\testLinq.csproj.Up2Date
+C:\Users\Пользователь\RiderProjects\testLinq\testLinq\obj\Debug\net8.0\testLinq.sourcelink.json

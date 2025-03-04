@@ -1,14 +1,15 @@
 ﻿using System.Reflection.Metadata;
+using Microsoft.EntityFrameworkCore;
 using testLinq.Connection;
 using testLinq.Model;
 
 namespace testLinq;
 
-public class LogicDb
+public class OneToManyLogicDb
 {
     private Barkovskii2323dLearningDbContext _db;
 
-    public LogicDb(Barkovskii2323dLearningDbContext db)
+    public OneToManyLogicDb(Barkovskii2323dLearningDbContext db)
     {
         _db = db;
     }
@@ -67,25 +68,22 @@ public class LogicDb
 
     public void ViewBooks()
     {
-        var books = _db.Books.Join
-            (_db.Authors,
-                book => book.AuthorId,
-                author => author.AuthorId,
-                (book, author) =>
-                    new { Book = book, Author = author })
+        var books = _db.Books
+            .Include(item => item.Author)
             .Select(
                 item => new
                 {
-                    item.Book.BookId,
-                    item.Book.Title,
-                    item.Book.AuthorId, item.Book.Year,
-                    item.Book.Genre,
-                    item.Book.Pages
+                    item.BookId,
+                    item.Author.Name,
+                    item.Title,
+                    item.Year,
+                    item.Genre,
+                    item.Pages
                 }).ToList();
 
         books.ForEach(book =>
             Console.WriteLine(
-                $"Айди книги: {book.BookId} \tНазвание: {book.Title} \tГод написания: {book.Year} \tЖанр: {book.Genre} \tКол-во страниц: {book.Pages}"));
+                $"Айди книги: {book.BookId}| Автор: {book.Name}| Название: {book.Title}| Год написания: {book.Year}| Жанр: {book.Genre}| Кол-во страниц: {book.Pages}"));
     }
 
     public void DeleteBook()
@@ -134,5 +132,27 @@ public class LogicDb
         _db.SaveChanges();
         Console.WriteLine("Назавние книги успешно обновлено!");
     }
-    
+
+    public void DeleteAuthor()
+    {
+        ViewAuthors();
+        Console.Write("Выберите id автора для удаления: ");
+        int authorId = int.Parse(Console.ReadLine());
+
+        var author = _db.Authors.FirstOrDefault(item => item.AuthorId == authorId);
+
+        if (author == null)
+        {
+            Console.WriteLine("Такого автора нет СОРРИ!");
+            return;
+        }
+
+        var book = _db.Books.FirstOrDefault(item => item.AuthorId == authorId);
+
+        _db.Books.Remove(book);
+        _db.Authors.Remove(author);
+        _db.SaveChanges();
+
+        Console.WriteLine("Автор успешно удален!");
+    }
 }
