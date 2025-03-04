@@ -1,4 +1,5 @@
 ﻿using System.Reflection.Metadata;
+using System.Threading.Channels;
 using Microsoft.EntityFrameworkCore;
 using testLinq.Connection;
 using testLinq.Model;
@@ -130,12 +131,14 @@ public class OneToManyLogicDb
 
         book.Title = title;
         _db.SaveChanges();
+        
         Console.WriteLine("Назавние книги успешно обновлено!");
     }
 
     public void DeleteAuthor()
     {
         ViewAuthors();
+        
         Console.Write("Выберите id автора для удаления: ");
         int authorId = int.Parse(Console.ReadLine());
 
@@ -147,10 +150,11 @@ public class OneToManyLogicDb
             return;
         }
 
-        var book = _db.Books.FirstOrDefault(item => item.AuthorId == authorId);
+        List<Book> books = _db.Books.Where(item => item.AuthorId == authorId).ToList();
 
-        _db.Books.Remove(book);
+        _db.Books.RemoveRange(books);
         _db.Authors.Remove(author);
+        
         _db.SaveChanges();
 
         Console.WriteLine("Автор успешно удален!");

@@ -1,5 +1,7 @@
-﻿using testLinq;
-using testLinq.Connection;
+﻿using testLinq.Connection;
+using testLinq.LogicForLabs.ManyToManyLogic.GameLogic;
+using testLinq.LogicForLabs.ManyToManyLogic.GamePlayerLogic;
+using testLinq.LogicForLabs.ManyToManyLogic.PlayerLogic;
 
 // Random random = new Random();
 // List<int> listInts = new List<int>();
@@ -167,8 +169,8 @@ using testLinq.Connection;
 //
 // Console.WriteLine(secondNumberFromList);
 
-Barkovskii2323dLearningDbContext db = new Barkovskii2323dLearningDbContext();
-OneToManyLogicDb oneToManyLogicDb = new OneToManyLogicDb(db);
+
+/*OneToManyLogicDb oneDbLogic = new OneToManyLogicDb(db);
 
 Console.WriteLine("Привет, тут можно что-то делать с БД");
 
@@ -188,36 +190,36 @@ while (true)
     {
         case 1:
         {
-            oneToManyLogicDb.AddNewBook();
-            
+            oneDbLogic.AddNewBook();
+
             Console.WriteLine();
         }
             break;
         case 2:
         {
-            oneToManyLogicDb.ViewBooks();
-            
+            oneDbLogic.ViewBooks();
+
             Console.WriteLine();
         }
             break;
         case 3:
         {
-            oneToManyLogicDb.DeleteBook();
-            
+            oneDbLogic.DeleteBook();
+
             Console.WriteLine();
         }
             break;
         case 4:
         {
-            oneToManyLogicDb.UpdateBook();
-            
+            oneDbLogic.UpdateBook();
+
             Console.WriteLine();
         }
             break;
         case 5:
         {
-            oneToManyLogicDb.DeleteAuthor();
-            
+            dbLogic.GetAllGamePlayers();
+
             Console.WriteLine();
         }
             break;
@@ -225,6 +227,114 @@ while (true)
         {
             return;
         }
+        default:
+            Console.WriteLine("Такого дейвствия нет! Выберите из предстваленого списка");
+            break;
+    }*/
+
+Barkovskii2323dLearningDbContext db = new Barkovskii2323dLearningDbContext();
+GameLogicDb gameLogicDb = new GameLogicDb(db);
+PlayerLogicDb playerLogicDb = new PlayerLogicDb(db);
+GamePlayerLogicDb gamePlayerLogicDb = new GamePlayerLogicDb();
+
+Console.WriteLine("Привет, тут можно что-то делать с БД");
+
+while (true)
+{
+    Console.WriteLine("1. Добавить игру");
+    Console.WriteLine("2. Просмотреть игры");
+    Console.WriteLine("3. Обновить игру");
+    Console.WriteLine("4. Удалить игру");
+    Console.WriteLine("5. Добваить игрока");
+    Console.WriteLine("6. Просмотреть всех игроков");
+    Console.WriteLine("7. Обновить игрока");
+    Console.WriteLine("8. Удалить игрока");
+    Console.WriteLine("9. Назначить игрока к игре");
+    Console.WriteLine("10. Просмотреть игроков и игры");
+    Console.WriteLine("11. Обновить кол-во часов игры");
+    Console.Write("Выберите действие: ");
+    int choice = int.Parse(Console.ReadLine());
+    Console.WriteLine();
+
+    switch (choice)
+    {
+        case 1:
+        {
+            gameLogicDb.CreateGame();
+
+            Console.WriteLine();
+        }
+            break;
+        case 2:
+        {
+            gameLogicDb.GetAllGames();
+
+            Console.WriteLine();
+        }
+            break;
+        case 3:
+        {
+            gameLogicDb.UpdateGame();
+
+            Console.WriteLine();
+        }
+            break;
+        case 4:
+        {
+            gameLogicDb.DeleteGame();
+
+            Console.WriteLine();
+        }
+            break;
+        case 5:
+        {
+            playerLogicDb.CreatePlayer();
+
+            Console.WriteLine();
+        }
+            break;
+        case 6:
+        {
+            playerLogicDb.GetAllPlayers();
+
+            Console.WriteLine();
+        }
+            break;
+        case 7:
+        {
+            playerLogicDb.UpdatePlayer();
+
+            Console.WriteLine();
+        }
+            break;
+        case 8:
+        {
+            playerLogicDb.DeletePlayer();
+
+            Console.WriteLine();
+        }
+            break;
+        case 9:
+        {
+            gamePlayerLogicDb.CreateGamePlayers();
+
+            Console.WriteLine();
+        }
+            break;
+        case 10:
+        {
+            gamePlayerLogicDb.GetAllGamePlayers();
+
+            Console.WriteLine();
+        }
+            break;
+        case 11:
+        {
+            gamePlayerLogicDb.UpdateHoursPlayerForPlayer();
+
+            Console.WriteLine();
+        }
+            break;
         default:
             Console.WriteLine("Такого дейвствия нет! Выберите из предстваленого списка");
             break;
